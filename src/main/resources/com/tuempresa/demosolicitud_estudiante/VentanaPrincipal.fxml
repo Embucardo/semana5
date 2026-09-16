@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tuempresa.demosolicitud_estudiante.Controller.PrincipalController"
+      prefHeight="400.0"
+      prefWidth="600.0"
+      spacing="20.0"
+      alignment="TOP_CENTER">
+
+    <MenuBar maxWidth="Infinity">
+
+        <Menu text="Opciones">
+            <MenuItem text="Registrar cliente"/>
+            <MenuItem text="Consultar clientes"/>
+            <MenuItem text="Salir"/>
+        </Menu>
+
+    </MenuBar>
+
+    <ToolBar maxWidth="Infinity">
+
+        <Button text="Registrar"/>
+
+        <Button text="Consultar"/>
+
+    </ToolBar>
+
+    <Label text="Sistema de Gestión de Solicitudes"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <VBox alignment="CENTER"
+          spacing="15.0">
+
+        <Button text="Registrar cliente"
+                prefWidth="220.0"
+                prefHeight="45.0"/>
+
+        <Button text="Consultar clientes"
+                prefWidth="220.0"
+                prefHeight="45.0"/>
+
+    </VBox>
+
+    <padding>
+        <Insets bottom="20.0"/>
+    </padding>
+
+</VBox>

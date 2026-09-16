@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tuempresa.demosolicitud_estudiante.Controller.ConsultaClientesController"
+      prefHeight="450.0"
+      prefWidth="750.0"
+      spacing="15.0"
+      alignment="TOP_CENTER">
+
+    <Label text="Consulta de Clientes"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="tablaClientes"
+               prefHeight="300.0"
+               prefWidth="700.0"
+               onMouseClicked="#seleccionarCliente">
+
+        <columns>
+
+            <TableColumn fx:id="colNombre"
+                         text="Nombre completo"
+                         prefWidth="180.0"/>
+
+            <TableColumn fx:id="colTipoCliente"
+                         text="Tipo de cliente"
+                         prefWidth="120.0"/>
+
+            <TableColumn fx:id="colCiudad"
+                         text="Ciudad"
+                         prefWidth="110.0"/>
+
+            <TableColumn fx:id="colFechaNacimiento"
+                         text="Fecha de nacimiento"
+                         prefWidth="150.0"/>
+
+            <TableColumn fx:id="colTipoSolicitud"
+                         text="Tipo de solicitud"
+                         prefWidth="140.0"/>
+
+        </columns>
+
+    </TableView>
+
+    <Button text="Volver al menú"
+            prefWidth="160.0"
+            onAction="#volverMenu"/>
+
+    <padding>
+        <Insets top="20.0"
+                right="20.0"
+                bottom="20.0"
+                left="20.0"/>
+    </padding>
+
+</VBox>
