@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      alignment="CENTER"
+      fx:controller="com.example.ventanainicio_semana5_grupo6.VentanaInicioController"
+      prefHeight="200.0" prefWidth="400.0">
+
+    <Label text="INICIO DE SESION"/>
+
+    <GridPane alignment="CENTER" hgap="5" vgap="5">
+        <Label GridPane.rowIndex="0" GridPane.columnIndex="0" text="USUARIO:" textAlignment="JUSTIFY"/>
+        <TextField GridPane.rowIndex="0" GridPane.columnIndex="1" promptText="Introduzca su usuario" fx:id="usuario"/>
+
+        <Label GridPane.rowIndex="1" GridPane.columnIndex="0" text="CONTRASEÑA: "/>
+        <TextField GridPane.rowIndex="1" GridPane.columnIndex="1" promptText="Introduzca la contraseña" fx:id="contrasena"/>
+
+        <Label fx:id="mensaje" GridPane.columnIndex="1" GridPane.rowIndex="2" wrapText="true" style="-fx-text-fill: red; -fx-font-weight: bold;"/>
+    </GridPane>
+
+    <Button text="Iniciar Sesion" onAction="#verificar"/>
+    <Button fx:id="close" text="Salir" onAction="#cerrar" wrapText="true" style="-fx-text-fill: red; -fx-font-weight: bold;"/>
+
+</VBox>
