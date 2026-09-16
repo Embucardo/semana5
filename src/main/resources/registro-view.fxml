@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.caso5.RegistroController"
+            prefHeight="650.0"
+            prefWidth="800.0">
+
+    <children>
+
+        <VBox spacing="15"
+              layoutX="40"
+              layoutY="30"
+              prefWidth="720">
+
+            <Label text="REGISTRO DE CLIENTE"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+            <GridPane hgap="15" vgap="12">
+
+                <Label text="Nombres:"
+                       GridPane.rowIndex="0"
+                       GridPane.columnIndex="0"/>
+
+                <TextField fx:id="txtNombres"
+                           promptText="Ingrese los nombres"
+                           GridPane.rowIndex="0"
+                           GridPane.columnIndex="1"/>
+
+
+                <Label text="Apellidos:"
+                       GridPane.rowIndex="1"
+                       GridPane.columnIndex="0"/>
+
+                <TextField fx:id="txtApellidos"
+                           promptText="Ingrese los apellidos"
+                           GridPane.rowIndex="1"
+                           GridPane.columnIndex="1"/>
+
+
+                <Label text="Tipo de cliente:"
+                       GridPane.rowIndex="2"
+                       GridPane.columnIndex="0"/>
+
+                <ComboBox fx:id="cbTipoCliente"
+                          promptText="Seleccione"
+                          GridPane.rowIndex="2"
+                          GridPane.columnIndex="1"/>
+
+
+                <Label text="Ciudad:"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="0"/>
+
+                <ComboBox fx:id="cbCiudad"
+                          promptText="Seleccione"
+                          GridPane.rowIndex="3"
+                          GridPane.columnIndex="1"/>
+
+
+                <Label text="Fecha de nacimiento:"
+                       GridPane.rowIndex="4"
+                       GridPane.columnIndex="0"/>
+
+                <DatePicker fx:id="dpFechaNacimiento"
+                            GridPane.rowIndex="4"
+                            GridPane.columnIndex="1"/>
+
+
+                <Label text="Tipo de solicitud:"
+                       GridPane.rowIndex="5"
+                       GridPane.columnIndex="0"/>
+
+                <HBox spacing="12"
+                      GridPane.rowIndex="5"
+                      GridPane.columnIndex="1">
+
+                    <RadioButton fx:id="rbConsulta"
+                                 text="Consulta"/>
+
+                    <RadioButton fx:id="rbContratacion"
+                                 text="Contratación"/>
+
+                    <RadioButton fx:id="rbReclamo"
+                                 text="Reclamo"/>
+
+                </HBox>
+
+
+                <Label text="Servicios de interés:"
+                       GridPane.rowIndex="6"
+                       GridPane.columnIndex="0"/>
+
+                <HBox spacing="12"
+                      GridPane.rowIndex="6"
+                      GridPane.columnIndex="1">
+
+                    <CheckBox fx:id="chkInternet"
+                              text="Internet"/>
+
+                    <CheckBox fx:id="chkTelefonia"
+                              text="Telefonía"/>
+
+                    <CheckBox fx:id="chkCable"
+                              text="Cable"/>
+
+                </HBox>
+
+            </GridPane>
+
+
+            <Label text="Fotografía"
+                   style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+            <ImageView fx:id="imgFotografia"
+                       fitWidth="150"
+                       fitHeight="150"
+                       preserveRatio="true"/>
+
+
+            <Button text="Seleccionar fotografía"
+                    onAction="#seleccionarFotografia"/>
+
+
+            <HBox spacing="15">
+
+                <Button text="Guardar"
+                        onAction="#guardarCliente"/>
+
+                <Button text="Limpiar"
+                        onAction="#limpiarFormulario"/>
+
+                <Button text="Cancelar"
+                        onAction="#cancelar"/>
+
+            </HBox>
+
+        </VBox>
+
+    </children>
+
+</AnchorPane>
