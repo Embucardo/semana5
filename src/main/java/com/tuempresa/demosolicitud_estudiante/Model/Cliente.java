@@ -10,13 +10,15 @@ public class Cliente {
     private LocalDate fechaNacimiento;
     private String tipoSolicitud;
     private String servicios;
+    private String rutaFotografia;
 
     public Cliente(String nombreCompleto,
                    String tipoCliente,
                    String ciudad,
                    LocalDate fechaNacimiento,
                    String tipoSolicitud,
-                   String servicios) {
+                   String servicios,
+                   String rutaFotografia) {
 
         this.nombreCompleto = nombreCompleto;
         this.tipoCliente = tipoCliente;
@@ -24,6 +26,7 @@ public class Cliente {
         this.fechaNacimiento = fechaNacimiento;
         this.tipoSolicitud = tipoSolicitud;
         this.servicios = servicios;
+        this.rutaFotografia = rutaFotografia;
     }
 
     public String getNombreCompleto() {
@@ -72,5 +75,13 @@ public class Cliente {
 
     public void setServicios(String servicios) {
         this.servicios = servicios;
+    }
+
+    public String getRutaFotografia() {
+        return rutaFotografia;
+    }
+
+    public void setRutaFotografia(String rutaFotografia) {
+        this.rutaFotografia = rutaFotografia;
     }
 }

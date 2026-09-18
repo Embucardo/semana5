@@ -2,17 +2,23 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.tuempresa.demosolicitud_estudiante.Controller.DetalleClienteController"
-      prefHeight="430.0"
-      prefWidth="500.0"
+      prefHeight="600.0"
+      prefWidth="550.0"
       spacing="20.0"
       alignment="TOP_CENTER">
 
     <Label text="Detalle del Cliente"
            style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <ImageView fx:id="imgFotografia"
+               fitWidth="150.0"
+               fitHeight="150.0"
+               preserveRatio="true"/>
 
     <GridPane hgap="15.0"
               vgap="15.0">

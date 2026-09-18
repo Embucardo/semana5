@@ -2,9 +2,10 @@ package com.example.caso5;
 
 import com.tuempresa.demosolicitud_estudiante.Model.Cliente;
 import com.tuempresa.demosolicitud_estudiante.Model.DatosClientes;
-
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 
 public class RegistroController {
 
@@ -57,11 +59,13 @@ public class RegistroController {
     @FXML
     private ImageView imgFotografia;
 
-    private final ToggleGroup grupoSolicitud =
-            new ToggleGroup();
+    private ToggleGroup grupoSolicitud;
+
+    private String rutaFotografia;
 
     private final DateTimeFormatter formatoFecha =
-            DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter.ofPattern("dd/MM/uuuu")
+                    .withResolverStyle(ResolverStyle.STRICT);
 
     @FXML
     public void initialize() {
@@ -92,43 +96,41 @@ public class RegistroController {
                 "Costa Caribe Sur"
         );
 
+        grupoSolicitud = new ToggleGroup();
+
         rbConsulta.setToggleGroup(grupoSolicitud);
         rbContratacion.setToggleGroup(grupoSolicitud);
         rbReclamo.setToggleGroup(grupoSolicitud);
 
-        dpFechaNacimiento.setConverter(
-                new StringConverter<>() {
+        dpFechaNacimiento.setConverter(new StringConverter<>() {
 
-                    @Override
-                    public String toString(LocalDate fecha) {
+            @Override
+            public String toString(LocalDate fecha) {
 
-                        if (fecha == null) {
-                            return "";
-                        }
-
-                        return formatoFecha.format(fecha);
-                    }
-
-                    @Override
-                    public LocalDate fromString(String texto) {
-
-                        if (texto == null
-                                || texto.trim().isEmpty()) {
-                            return null;
-                        }
-
-                        try {
-                            return LocalDate.parse(
-                                    texto.trim(),
-                                    formatoFecha
-                            );
-
-                        } catch (DateTimeParseException e) {
-                            return null;
-                        }
-                    }
+                if (fecha == null) {
+                    return "";
                 }
-        );
+
+                return formatoFecha.format(fecha);
+            }
+
+            @Override
+            public LocalDate fromString(String texto) {
+
+                if (texto == null || texto.trim().isEmpty()) {
+                    return null;
+                }
+
+                try {
+                    return LocalDate.parse(
+                            texto.trim(),
+                            formatoFecha
+                    );
+                } catch (DateTimeParseException e) {
+                    return null;
+                }
+            }
+        });
 
         dpFechaNacimiento.setPromptText("dd/MM/yyyy");
     }
@@ -136,8 +138,7 @@ public class RegistroController {
     @FXML
     private void seleccionarFotografia() {
 
-        FileChooser fileChooser =
-                new FileChooser();
+        FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle(
                 "Seleccionar fotografía"
@@ -152,19 +153,17 @@ public class RegistroController {
                 )
         );
 
-        File archivo =
-                fileChooser.showOpenDialog(
-                        imgFotografia
-                                .getScene()
-                                .getWindow()
-                );
+        File archivo = fileChooser.showOpenDialog(
+                imgFotografia.getScene().getWindow()
+        );
 
         if (archivo != null) {
 
+            rutaFotografia =
+                    archivo.toURI().toString();
+
             Image imagen =
-                    new Image(
-                            archivo.toURI().toString()
-                    );
+                    new Image(rutaFotografia);
 
             imgFotografia.setImage(imagen);
         }
@@ -180,7 +179,9 @@ public class RegistroController {
                 txtApellidos.getText().trim();
 
         if (nombres.isEmpty()) {
-            mostrarError("Ingrese los nombres.");
+            mostrarError(
+                    "Ingrese los nombres."
+            );
             return;
         }
 
@@ -201,7 +202,9 @@ public class RegistroController {
         }
 
         if (apellidos.isEmpty()) {
-            mostrarError("Ingrese los apellidos.");
+            mostrarError(
+                    "Ingrese los apellidos."
+            );
             return;
         }
 
@@ -261,8 +264,8 @@ public class RegistroController {
         } catch (DateTimeParseException e) {
 
             mostrarError(
-                    "La fecha de nacimiento no es válida.\n"
-                            + "Utilice el formato dd/MM/yyyy."
+                    "La fecha de nacimiento no es válida.\n" +
+                            "Utilice el formato dd/MM/yyyy."
             );
 
             return;
@@ -277,13 +280,15 @@ public class RegistroController {
             return;
         }
 
-        if (grupoSolicitud
-                .getSelectedToggle() == null) {
+        RadioButton solicitudSeleccionada =
+                (RadioButton)
+                        grupoSolicitud
+                                .getSelectedToggle();
 
+        if (solicitudSeleccionada == null) {
             mostrarError(
                     "Seleccione el tipo de solicitud."
             );
-
             return;
         }
 
@@ -298,10 +303,12 @@ public class RegistroController {
             return;
         }
 
-        RadioButton solicitudSeleccionada =
-                (RadioButton)
-                        grupoSolicitud
-                                .getSelectedToggle();
+        if (rutaFotografia == null) {
+            mostrarError(
+                    "Seleccione una fotografía."
+            );
+            return;
+        }
 
         String servicios = "";
 
@@ -319,42 +326,35 @@ public class RegistroController {
 
         servicios = servicios.trim();
 
-        Cliente cliente =
-                new Cliente(
-                        nombres + " " + apellidos,
-                        cbTipoCliente.getValue(),
-                        cbCiudad.getValue(),
-                        fechaNacimiento,
-                        solicitudSeleccionada.getText(),
-                        servicios
-                );
+        Cliente cliente = new Cliente(
+                nombres + " " + apellidos,
+                cbTipoCliente.getValue(),
+                cbCiudad.getValue(),
+                fechaNacimiento,
+                solicitudSeleccionada.getText(),
+                servicios,
+                rutaFotografia
+        );
 
         DatosClientes.agregarCliente(cliente);
 
-        Alert alerta =
-                new Alert(
-                        Alert.AlertType.INFORMATION
-                );
+        Alert alerta = new Alert(
+                Alert.AlertType.INFORMATION
+        );
 
-        alerta.setTitle("Registro");
+        alerta.setTitle(
+                "Registro de cliente"
+        );
 
         alerta.setHeaderText(
                 "Cliente registrado correctamente"
         );
 
         alerta.setContentText(
-                "Nombres: " + nombres
-                        + "\nApellidos: " + apellidos
-                        + "\nTipo de cliente: "
-                        + cbTipoCliente.getValue()
-                        + "\nDepartamento: "
-                        + cbCiudad.getValue()
-                        + "\nFecha de nacimiento: "
-                        + fechaNacimiento
-                        + "\nTipo de solicitud: "
-                        + solicitudSeleccionada.getText()
-                        + "\nServicios: "
-                        + servicios
+                "El cliente " +
+                        nombres + " " +
+                        apellidos +
+                        " fue registrado."
         );
 
         alerta.showAndWait();
@@ -381,10 +381,13 @@ public class RegistroController {
         chkCable.setSelected(false);
 
         imgFotografia.setImage(null);
+
+        rutaFotografia = null;
     }
 
     @FXML
-    private void cancelar() throws IOException {
+    private void cancelar(ActionEvent event)
+            throws IOException {
 
         Parent root = FXMLLoader.load(
                 getClass().getResource(
@@ -392,10 +395,11 @@ public class RegistroController {
                 )
         );
 
-        Stage stage = (Stage)
-                imgFotografia
-                        .getScene()
-                        .getWindow();
+        Stage stage =
+                (Stage)
+                        ((Node) event.getSource())
+                                .getScene()
+                                .getWindow();
 
         stage.getScene().setRoot(root);
 
@@ -406,10 +410,9 @@ public class RegistroController {
 
     private void mostrarError(String mensaje) {
 
-        Alert alerta =
-                new Alert(
-                        Alert.AlertType.ERROR
-                );
+        Alert alerta = new Alert(
+                Alert.AlertType.ERROR
+        );
 
         alerta.setTitle("Error");
 
