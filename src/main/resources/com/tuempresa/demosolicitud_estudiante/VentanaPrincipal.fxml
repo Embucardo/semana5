@@ -6,47 +6,65 @@
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.tuempresa.demosolicitud_estudiante.Controller.PrincipalController"
-      prefHeight="400.0"
-      prefWidth="600.0"
-      spacing="20.0"
-      alignment="TOP_CENTER">
+      prefHeight="600.0"
+      prefWidth="900.0"
+      spacing="25.0"
+      alignment="TOP_CENTER"
+      fillWidth="true">
 
     <MenuBar maxWidth="Infinity">
 
         <Menu text="Opciones">
-            <MenuItem text="Registrar cliente"/>
-            <MenuItem text="Consultar clientes"/>
-            <MenuItem text="Salir"/>
+
+            <MenuItem text="Registrar cliente"
+                      onAction="#abrirRegistro"/>
+
+            <MenuItem text="Consultar clientes"
+                      onAction="#abrirConsulta"/>
+
+            <SeparatorMenuItem/>
+
+            <MenuItem text="Salir"
+                      onAction="#salir"/>
+
         </Menu>
 
     </MenuBar>
 
     <ToolBar maxWidth="Infinity">
 
-        <Button text="Registrar"/>
+        <Button text="Registrar"
+                onAction="#abrirRegistro"/>
 
-        <Button text="Consultar"/>
+        <Button text="Consultar"
+                onAction="#abrirConsulta"/>
 
     </ToolBar>
 
-    <Label text="Sistema de Gestión de Solicitudes"
-           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <Label text="SISTEMA DE GESTIÓN DE SOLICITUDES"
+           style="-fx-font-size: 26px; -fx-font-weight: bold;"/>
+
+    <Label text="Menú Principal"
+           style="-fx-font-size: 18px;"/>
 
     <VBox alignment="CENTER"
-          spacing="15.0">
+          spacing="20.0"
+          VBox.vgrow="ALWAYS">
 
         <Button text="Registrar cliente"
-                prefWidth="220.0"
-                prefHeight="45.0"/>
+                prefWidth="250.0"
+                prefHeight="50.0"
+                onAction="#abrirRegistro"/>
 
         <Button text="Consultar clientes"
-                prefWidth="220.0"
-                prefHeight="45.0"/>
+                prefWidth="250.0"
+                prefHeight="50.0"
+                onAction="#abrirConsulta"/>
 
     </VBox>
 
     <padding>
-        <Insets bottom="20.0"/>
+        <Insets bottom="30.0"/>
     </padding>
 
 </VBox>

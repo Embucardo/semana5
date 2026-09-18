@@ -1,31 +1,25 @@
-package com.example.caso5;
+package com.tuempresa.demosolicitud_estudiante.Controller;
 
 import com.tuempresa.demosolicitud_estudiante.Model.Cliente;
-import com.tuempresa.demosolicitud_estudiante.Model.DatosClientes;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-public class RegistroController {
+public class EditarClienteController {
 
     @FXML
-    private TextField txtNombres;
-
-    @FXML
-    private TextField txtApellidos;
+    private TextField txtNombre;
 
     @FXML
     private ComboBox<String> cbTipoCliente;
@@ -37,13 +31,7 @@ public class RegistroController {
     private DatePicker dpFechaNacimiento;
 
     @FXML
-    private RadioButton rbConsulta;
-
-    @FXML
-    private RadioButton rbContratacion;
-
-    @FXML
-    private RadioButton rbReclamo;
+    private ComboBox<String> cbTipoSolicitud;
 
     @FXML
     private CheckBox chkInternet;
@@ -54,11 +42,7 @@ public class RegistroController {
     @FXML
     private CheckBox chkCable;
 
-    @FXML
-    private ImageView imgFotografia;
-
-    private final ToggleGroup grupoSolicitud =
-            new ToggleGroup();
+    private Cliente cliente;
 
     private final DateTimeFormatter formatoFecha =
             DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -92,9 +76,11 @@ public class RegistroController {
                 "Costa Caribe Sur"
         );
 
-        rbConsulta.setToggleGroup(grupoSolicitud);
-        rbContratacion.setToggleGroup(grupoSolicitud);
-        rbReclamo.setToggleGroup(grupoSolicitud);
+        cbTipoSolicitud.getItems().addAll(
+                "Consulta",
+                "Contratación",
+                "Reclamo"
+        );
 
         dpFechaNacimiento.setConverter(
                 new StringConverter<>() {
@@ -114,124 +100,124 @@ public class RegistroController {
 
                         if (texto == null
                                 || texto.trim().isEmpty()) {
+
                             return null;
                         }
 
                         try {
+
                             return LocalDate.parse(
                                     texto.trim(),
                                     formatoFecha
                             );
 
                         } catch (DateTimeParseException e) {
+
                             return null;
                         }
                     }
                 }
         );
 
-        dpFechaNacimiento.setPromptText("dd/MM/yyyy");
+        dpFechaNacimiento.setPromptText(
+                "dd/MM/yyyy"
+        );
+    }
+
+    public void cargarCliente(
+            Cliente cliente
+    ) {
+
+        this.cliente = cliente;
+
+        txtNombre.setText(
+                cliente.getNombreCompleto()
+        );
+
+        cbTipoCliente.setValue(
+                cliente.getTipoCliente()
+        );
+
+        cbCiudad.setValue(
+                cliente.getCiudad()
+        );
+
+        dpFechaNacimiento.setValue(
+                cliente.getFechaNacimiento()
+        );
+
+        cbTipoSolicitud.setValue(
+                cliente.getTipoSolicitud()
+        );
+
+        String servicios =
+                cliente.getServicios();
+
+        chkInternet.setSelected(
+                servicios.contains("Internet")
+        );
+
+        chkTelefonia.setSelected(
+                servicios.contains("Telefonía")
+        );
+
+        chkCable.setSelected(
+                servicios.contains("Cable")
+        );
     }
 
     @FXML
-    private void seleccionarFotografia() {
+    private void guardarCambios(
+            ActionEvent event
+    ) throws IOException {
 
-        FileChooser fileChooser =
-                new FileChooser();
+        String nombre =
+                txtNombre.getText().trim();
 
-        fileChooser.setTitle(
-                "Seleccionar fotografía"
-        );
+        if (nombre.isEmpty()) {
 
-        fileChooser.getExtensionFilters().add(
-                new FileChooser.ExtensionFilter(
-                        "Imágenes",
-                        "*.png",
-                        "*.jpg",
-                        "*.jpeg"
-                )
-        );
+            mostrarError(
+                    "Ingrese el nombre del cliente."
+            );
 
-        File archivo =
-                fileChooser.showOpenDialog(
-                        imgFotografia
-                                .getScene()
-                                .getWindow()
-                );
-
-        if (archivo != null) {
-
-            Image imagen =
-                    new Image(
-                            archivo.toURI().toString()
-                    );
-
-            imgFotografia.setImage(imagen);
-        }
-    }
-
-    @FXML
-    private void guardarCliente() {
-
-        String nombres =
-                txtNombres.getText().trim();
-
-        String apellidos =
-                txtApellidos.getText().trim();
-
-        if (nombres.isEmpty()) {
-            mostrarError("Ingrese los nombres.");
             return;
         }
 
-        if (!nombres.matches(
+        if (!nombre.matches(
                 "[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+"
         )) {
+
             mostrarError(
-                    "Los nombres solo pueden contener letras."
+                    "El nombre solo puede contener letras."
             );
+
             return;
         }
 
-        if (nombres.length() < 2) {
+        if (nombre.length() < 3) {
+
             mostrarError(
                     "Ingrese un nombre válido."
             );
-            return;
-        }
 
-        if (apellidos.isEmpty()) {
-            mostrarError("Ingrese los apellidos.");
-            return;
-        }
-
-        if (!apellidos.matches(
-                "[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ ]+"
-        )) {
-            mostrarError(
-                    "Los apellidos solo pueden contener letras."
-            );
-            return;
-        }
-
-        if (apellidos.length() < 2) {
-            mostrarError(
-                    "Ingrese un apellido válido."
-            );
             return;
         }
 
         if (cbTipoCliente.getValue() == null) {
+
             mostrarError(
                     "Seleccione el tipo de cliente."
             );
+
             return;
         }
 
         if (cbCiudad.getValue() == null) {
+
             mostrarError(
                     "Seleccione el departamento."
             );
+
             return;
         }
 
@@ -242,9 +228,11 @@ public class RegistroController {
                         .trim();
 
         if (textoFecha.isEmpty()) {
+
             mostrarError(
                     "Ingrese la fecha de nacimiento."
             );
+
             return;
         }
 
@@ -271,14 +259,15 @@ public class RegistroController {
         if (fechaNacimiento.isAfter(
                 LocalDate.now()
         )) {
+
             mostrarError(
                     "La fecha de nacimiento no puede ser futura."
             );
+
             return;
         }
 
-        if (grupoSolicitud
-                .getSelectedToggle() == null) {
+        if (cbTipoSolicitud.getValue() == null) {
 
             mostrarError(
                     "Seleccione el tipo de solicitud."
@@ -298,11 +287,6 @@ public class RegistroController {
             return;
         }
 
-        RadioButton solicitudSeleccionada =
-                (RadioButton)
-                        grupoSolicitud
-                                .getSelectedToggle();
-
         String servicios = "";
 
         if (chkInternet.isSelected()) {
@@ -319,92 +303,77 @@ public class RegistroController {
 
         servicios = servicios.trim();
 
-        Cliente cliente =
-                new Cliente(
-                        nombres + " " + apellidos,
-                        cbTipoCliente.getValue(),
-                        cbCiudad.getValue(),
-                        fechaNacimiento,
-                        solicitudSeleccionada.getText(),
-                        servicios
-                );
+        cliente.setNombreCompleto(nombre);
 
-        DatosClientes.agregarCliente(cliente);
+        cliente.setTipoCliente(
+                cbTipoCliente.getValue()
+        );
+
+        cliente.setCiudad(
+                cbCiudad.getValue()
+        );
+
+        cliente.setFechaNacimiento(
+                fechaNacimiento
+        );
+
+        cliente.setTipoSolicitud(
+                cbTipoSolicitud.getValue()
+        );
+
+        cliente.setServicios(servicios);
 
         Alert alerta =
                 new Alert(
                         Alert.AlertType.INFORMATION
                 );
 
-        alerta.setTitle("Registro");
+        alerta.setTitle("Editar cliente");
 
         alerta.setHeaderText(
-                "Cliente registrado correctamente"
+                "Cliente actualizado correctamente"
         );
 
         alerta.setContentText(
-                "Nombres: " + nombres
-                        + "\nApellidos: " + apellidos
-                        + "\nTipo de cliente: "
-                        + cbTipoCliente.getValue()
-                        + "\nDepartamento: "
-                        + cbCiudad.getValue()
-                        + "\nFecha de nacimiento: "
-                        + fechaNacimiento
-                        + "\nTipo de solicitud: "
-                        + solicitudSeleccionada.getText()
-                        + "\nServicios: "
-                        + servicios
+                "Los cambios fueron guardados."
         );
 
         alerta.showAndWait();
 
-        limpiarFormulario();
+        volverConsulta(event);
     }
 
     @FXML
-    private void limpiarFormulario() {
+    private void cancelar(
+            ActionEvent event
+    ) throws IOException {
 
-        txtNombres.clear();
-        txtApellidos.clear();
-
-        cbTipoCliente.setValue(null);
-        cbCiudad.setValue(null);
-
-        dpFechaNacimiento.setValue(null);
-        dpFechaNacimiento.getEditor().clear();
-
-        grupoSolicitud.selectToggle(null);
-
-        chkInternet.setSelected(false);
-        chkTelefonia.setSelected(false);
-        chkCable.setSelected(false);
-
-        imgFotografia.setImage(null);
+        volverConsulta(event);
     }
 
-    @FXML
-    private void cancelar() throws IOException {
+    private void volverConsulta(
+            ActionEvent event
+    ) throws IOException {
 
         Parent root = FXMLLoader.load(
                 getClass().getResource(
-                        "/com/tuempresa/demosolicitud_estudiante/VentanaPrincipal.fxml"
+                        "/com/tuempresa/demosolicitud_estudiante/ConsultaClientes.fxml"
                 )
         );
 
-        Stage stage = (Stage)
-                imgFotografia
-                        .getScene()
-                        .getWindow();
+        Stage stage =
+                (Stage)
+                        ((Node) event.getSource())
+                                .getScene()
+                                .getWindow();
 
         stage.getScene().setRoot(root);
-
-        stage.setTitle(
-                "Sistema de Gestión de Solicitudes"
-        );
+        stage.setTitle("Consulta de Clientes");
     }
 
-    private void mostrarError(String mensaje) {
+    private void mostrarError(
+            String mensaje
+    ) {
 
         Alert alerta =
                 new Alert(

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tuempresa.demosolicitud_estudiante.Controller.EditarClienteController"
+      prefHeight="550.0"
+      prefWidth="600.0"
+      spacing="18.0"
+      alignment="TOP_CENTER">
+
+    <Label text="Editar Cliente"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+
+    <GridPane hgap="15.0"
+              vgap="15.0">
+
+        <Label text="Nombre completo:"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="0"/>
+
+        <TextField fx:id="txtNombre"
+                   GridPane.columnIndex="1"
+                   GridPane.rowIndex="0"/>
+
+        <Label text="Tipo de cliente:"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="1"/>
+
+        <ComboBox fx:id="cbTipoCliente"
+                  prefWidth="220.0"
+                  GridPane.columnIndex="1"
+                  GridPane.rowIndex="1"/>
+
+        <Label text="Departamento:"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="2"/>
+
+        <ComboBox fx:id="cbCiudad"
+                  prefWidth="220.0"
+                  GridPane.columnIndex="1"
+                  GridPane.rowIndex="2"/>
+
+        <Label text="Fecha de nacimiento:"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="3"/>
+
+        <DatePicker fx:id="dpFechaNacimiento"
+                    GridPane.columnIndex="1"
+                    GridPane.rowIndex="3"/>
+
+        <Label text="Tipo de solicitud:"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="4"/>
+
+        <ComboBox fx:id="cbTipoSolicitud"
+                  prefWidth="220.0"
+                  GridPane.columnIndex="1"
+                  GridPane.rowIndex="4"/>
+
+        <Label text="Servicios:"
+               GridPane.columnIndex="0"
+               GridPane.rowIndex="5"/>
+
+        <HBox spacing="12.0"
+              GridPane.columnIndex="1"
+              GridPane.rowIndex="5">
+
+            <CheckBox fx:id="chkInternet"
+                      text="Internet"/>
+
+            <CheckBox fx:id="chkTelefonia"
+                      text="Telefonía"/>
+
+            <CheckBox fx:id="chkCable"
+                      text="Cable"/>
+
+        </HBox>
+
+    </GridPane>
+
+    <HBox alignment="CENTER"
+          spacing="15.0">
+
+        <Button text="Guardar cambios"
+                prefWidth="150.0"
+                onAction="#guardarCambios"/>
+
+        <Button text="Cancelar"
+                prefWidth="120.0"
+                onAction="#cancelar"/>
+
+    </HBox>
+
+    <padding>
+        <Insets top="25.0"
+                right="30.0"
+                bottom="25.0"
+                left="30.0"/>
+    </padding>
+
+</VBox>

@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
 
 <VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.tuempresa.demosolicitud_estudiante.Controller.ConsultaClientesController"
@@ -30,7 +31,7 @@
                          prefWidth="120.0"/>
 
             <TableColumn fx:id="colCiudad"
-                         text="Ciudad"
+                         text="Departamento"
                          prefWidth="110.0"/>
 
             <TableColumn fx:id="colFechaNacimiento"
@@ -45,15 +46,26 @@
 
     </TableView>
 
-    <Button text="Volver al menú"
-            prefWidth="160.0"
-            onAction="#volverMenu"/>
+    <HBox alignment="CENTER"
+          spacing="15.0">
+
+        <Button text="Editar cliente"
+                prefWidth="160.0"
+                onAction="#editarCliente"/>
+
+        <Button text="Volver al menú"
+                prefWidth="160.0"
+                onAction="#volverMenu"/>
+
+    </HBox>
 
     <padding>
+
         <Insets top="20.0"
                 right="20.0"
                 bottom="20.0"
                 left="20.0"/>
+
     </padding>
 
 </VBox>

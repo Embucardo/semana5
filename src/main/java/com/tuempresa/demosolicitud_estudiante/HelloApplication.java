@@ -13,12 +13,23 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
 
         FXMLLoader fxmlLoader =
-                new FXMLLoader(HelloApplication.class.getResource("ConsultaClientes.fxml"));
+                new FXMLLoader(
+                        HelloApplication.class.getResource(
+                                "/com/example/ventanainicio_semana5_grupo6/ventanaInicio.fxml"
+                        )
+                );
 
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene =
+                new Scene(
+                        fxmlLoader.load()
+                );
 
-        stage.setTitle("Sistema de Gestión de Solicitudes");
+        stage.setTitle(
+                "Sistema de Gestión de Solicitudes"
+        );
+
         stage.setScene(scene);
+
         stage.show();
     }
 }
